@@ -144,4 +144,67 @@ where $\Delta[i]$ is a $m_i \times m_i$ matrix defined by:
 
 The zeros are automatically taken care of in this definition too. Also, when $m_i = 1$, $\Delta[i] = [1]$ and $F(\alpha_i, 1) = f'(\alpha_i)$ so this is consistent with the distinct roots case we started with.
 
+\newpage
+\section*{Polynomial Interpolation and the Vandermonde matrix}
+Suppose I know that a function $H(x)$ takes values $\beta_i$ at $x = \alpha_i$ for $i \in \{1,2,\dots,n\}$ where the $\alpha_i$ are distinct. If I was to give an estimated $H$ from this information assuming that, say, $H(x)$ is a polynomial of degree $n-1$; then $H(x)$ can be `uniquely' expressed as:
+\begin{align}
+    H(x) = \sum_{i=1}^{n} \frac{f(x)}{f'(\alpha_i)(x-\alpha_i)} \beta_i \label{defn-H}
+\end{align}
+Where $f(x) := \prod_{i=1}^{n} (x-\alpha_i)$ for ease of notation (and for relating to the previous formulaes). As before, $f(x)/(x-\alpha_i)$ is just a shorthand for $\prod_{k=1, k\neq i}^{n} (x-\alpha_k)$. The justification for this is also the same as before, $H(x)-$RHS is $0$ at $n$ distinct values (the $\alpha_i$) but is a $n-1$ degree polynomial (at most). So it is zero. These are actually called the Lagrange Interpolating Polynomials.
+\begin{tcolorbox}
+As a sidenote, we can again extend the same problem for the case of repeated roots. It would be a very convoluted, made-up problem statement but then what isn't? Suppose I know that a function $H(x)$ takes values $\beta_i$ at $x = \alpha_i$ with a multiplicity $m_i$ for $i \in \{1,2,\dots,n\}$ where the $\alpha_i$ are distinct. This means that as a function, $H$ has the property that
+\begin{align}
+    \lim_{x \rightarrow \alpha_i} \frac{H(x) - \beta_i}{(x-\alpha_i)^{k}} = 0 &&\forall k \textrm{ such that } 0\leq k<m_i, \forall i
+\end{align}
+If I was to give an estimated $H$ from this information assuming that, say, $H(x)$ is a polynomial of appropriate degree; then $H(x)$ can be expressed as:
+\begin{align}
+    H(x) = \sum_{i=1}^{n} \frac{p_i(x-\alpha_i) f(x)}{(x-\alpha_i)^{m_i}} \beta_i
+\end{align}
+Where $f(x) := \prod_{i=1}^{n} (x-\alpha_i)^{m_i}$ and $f(x)/(x-\alpha_i)^{m_i}$ would be a shorthand as before. $p_i(x)$ is a polynomial of degree $m_i-1$ as described in the previous section. The justification for this is also the same as before, $H(x)-$RHS is divisible by $(x-\alpha_i)^{m_i}$ for all $i$ (write in terms of $p(x)g(x)-1$ to see how). But it's of degree 1 less than $\sum m_i$, so it is zero.
+\end{tcolorbox}
+
+Now a polynomial of degree $n-1$ is described completely by its $n$ coefficients. But by \eqref{defn-H} we can see that its also completely described by the values it returns at some $n$ inputs $\alpha_i$. Let the coefficient of $x^k$ in $H(x)$ from \eqref{defn-H} be $c_k$ where $k \in \{0,1,\dots,n-1\}$. The following relation exists between $\alpha_i, \beta_i, c_k$:
+\begin{align}
+    \textrm{let } V = 
+    \begin{bmatrix}
+        1 & \alpha_1 & \alpha_1^2 & \cdots & \alpha_1^{n-1} \\
+        1 & \alpha_2 & \alpha_2^2 & \cdots & \alpha_2^{n-1} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & \alpha_n & \alpha_n^2 & \cdots & \alpha_n^{n-1}
+    \end{bmatrix}
+\end{align}
+($V$ stands for Vandermonde)
+\begin{align}
+    V \begin{bmatrix}c_0 \\ c_1 \\ \vdots \\ c_{n-1}\end{bmatrix} &= \begin{bmatrix}\beta_1 \\ \beta_2 \\ \vdots \\ \beta_{n} \end{bmatrix} \\
+    \begin{bmatrix}c_0 \\ c_1 \\ \vdots \\ c_{n-1}\end{bmatrix} &= V^{-1} \begin{bmatrix}\beta_1 \\ \beta_2 \\ \vdots \\ \beta_{n} \end{bmatrix} \label{defn-V}
+\end{align}
+From \eqref{defn-H} and \eqref{defn-V} we conclude that the $i$-th column of $V^{-1}$ is the set of coefficients of:
+\begin{align}
+    \frac{f(x)}{f'(\alpha_i)(x-\alpha_i)} = \prod_{k=1, k\neq i}^{n} \frac{x-\alpha_k}{\alpha_i - \alpha_k}
+\end{align}
+Let $C$ be the cofactor matrix of $V$ (each element is the cofactor of the corresponding element in $V$, and $V^{-1} = C^\top/\textrm{det}(V)$). Then for example: $C_{i,n}/\textrm{det}(V) = \prod_{k=1, k\neq i}^{n} \frac{1}{\alpha_i - \alpha_k}$ which is the coefficient of $x^{n-1}$ (calculated in two different ways). Similarly, the coefficient of $x^{k-1}$ for some $k \in \{1,2,\dots,n\}$ is (calculated in two different ways):
+\begin{align}
+    \frac{C_{i,k}}{\textrm{det}(V)} &= \frac{C_{i,n}}{\textrm{det}(V)}\left(\textrm{coeff. of $x^{k-1}$ in } \prod_{j=1, j\neq i}^{n} (x-\alpha_j)\right) \\
+    C_{i,k} &= C_{i,n}\left( (-1)^{n-k} \sum_{\substack{S \subseteq U \\ |S| = n-k}}\prod_{j\in S} \alpha_j\right) && U = \{1,2,\dots,n\} - \{i\} \textrm{ and } k\neq n \label{identity}
+\end{align}
+\eqref{identity} is just an identity involving matrix determinants and is independent of $\beta_i, c_k$ or $H$. Also all terms in \eqref{identity} exclude the variable $\alpha_i$ and it is absent from the equation but it makes it a little cumbersome to think about. $C_{i,k}$ and $C_{i,n}$ are determinants of matrices of size $n-1 \times n-1$. But the same identity will be true for an equivalent $n \times n$ matrix. In short, as far as the underlying identity involving matrix determinants is concerned, it is equivalently: (for new variables $x_i$ with $i\in\{1,2,\dots,n\}$)
+\begin{align*}
+    \textrm{let } V &= \begin{bmatrix}
+        1 & x_1 & x_1^2 & \cdots & x_1^{k-1} & x_1^{k} & \cdots & x_1^{n-1} \\
+        1 & x_2 & x_2^2 & \cdots & x_2^{k-1} & x_2^{k} & \cdots & x_2^{n-1} \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & x_{n} & x_{n}^2 & \cdots & x_{n}^{k-1} & x_{n}^{k} & \cdots & x_{n}^{n-1}
+    \end{bmatrix}\\\\
+    \textrm{let } V_k &= \begin{bmatrix}
+        1 & x_1 & x_1^2 & \cdots & x_1^{k-2} & x_1^{k} & \cdots & x_1^{n} \\
+        1 & x_2 & x_2^2 & \cdots & x_2^{k-2} & x_2^{k} & \cdots & x_2^{n} \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & x_{n} & x_{n}^2 & \cdots & x_{n}^{k-2} & x_{n}^{k} & \cdots & x_{n}^{n}
+    \end{bmatrix} && 1\leq k\leq n\\\\
+    \textrm{det}(V_k) &= \textrm{det}(V)\left(
+    \sum_{\substack{S \subseteq U \\ |S| = n-k+1}}\prod_{j\in S} x_j
+    \right) && U = \{1,2,\dots,n\}
+\end{align*}
+Here $V$ is a standard Vandermonde matrix and $V_k$ is formed by removing the $k$-th column from $V$ and adding a new column at the right end for the next power ($n$).
+
 \end{document}
