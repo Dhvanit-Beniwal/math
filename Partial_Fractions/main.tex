@@ -75,8 +75,7 @@ or equivalently,
 \begin{align}
     x^{m_i} \textrm{ divides } p_i(x)g_i(x) - 1 && \forall i \in \{1,2,\dots,n\}
 \end{align}
-Now this is an independent question for each $i$, where we are `given' $g_i(x)$ and we have to `find' a $p_i(x)$ of degree $m_i - 1$. The coefficients of $g_i(x)$ are `known'. We have to set the first $m_i$ coefficients of $p_i(x)g_i(x)$ to $0$ (or $1$) and the $m_i$ coefficients of $p_i(x)$ are our unknowns. This forms a system of linear equations that we know how to solve. But it would be nice to be able to get some final expression too.
-\\\\
+Now this is an independent question for each $i$, where we are `given' $g_i(x)$ and we have to `find' a $p_i(x)$ of degree $m_i - 1$. The coefficients of $g_i(x)$ are `known'. We have to set the first $m_i$ coefficients of $p_i(x)g_i(x)$ to $0$ (or $1$) and the $m_i$ coefficients of $p_i(x)$ are our unknowns. This forms a system of linear equations that we know how to solve. But it would be nice to be able to get some final expression too. For a general polynomial $P(x)$, let's denote the coefficient of $x^k$ in $P(x)$ as $P[k]$.
 \begin{align}
     \sum_{j=0}^{k} p_i[j]\cdot g_i[k-j] &= \begin{cases} 1 & k = 0\\ 0 & k>0 \textrm{ and } k<m_i\end{cases} \\
     \textrm{Let } G &= 
@@ -114,7 +113,7 @@ So the coefficients of $p_i(x)$ (what we require) is just the first row of $G_A$
 \\\\
 There is a nicer representation for $p_i(x)$ however. The determinant of a matrix is the sum of element-cofactor products of (say) the first row. If we replace the first row of $G$ with powers of $x$ i.e. ($1,x,x^2,\dots,x^{m_i-1}$) and take the determinant of that matrix, we get $p_i(x)$ since the coefficient of a power of $x$ is the cofactor of that same element in $G$'s first row. We will of-course have to divide by $(g_i[0]^{m_i})$ after taking the determinant. Before all this however, we still need to be able to write $g_i[k]$ in terms of $f$ so we can form the matrix $G$. We shall do that now
 \\\\
-For a general polynomial $P(x)$, let's denote the coefficient of $x^k$ in $P(x)$ as $P[k]$. Also, we denote by $f^k(x)$ the $k$-th derivative of $f(x)$ where $f^0(x) = f(x)$. From the definition of $g_i$ it will follow that
+We denote by $f^k(x)$ the $k$-th derivative of $f(x)$ where $f^0(x) = f(x)$. From the definition of $g_i$ it will follow that
 \begin{align}
     g_i[k] = \frac{f^{k+m_i}(\alpha_i)}{(k+m_i)!}
 \end{align}
