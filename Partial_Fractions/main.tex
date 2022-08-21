@@ -21,6 +21,7 @@
 \begin{document}
 \maketitle
 
+\section*{Introduction}
 I have a polynomial $f(x)$ and I want to write $1/f(x)$ as a sum of functions of the form $A/(x+B)$, if possible. Partial fractions, they call it.
 \begin{align}
     \frac{1}{x^3 - 6x^2 + 11x - 6} = \frac{1/2}{x-1} + \frac{-1}{x-2} + \frac{1/2}{x-3}
@@ -134,7 +135,7 @@ Thus we have:
 For the sake of closure, we can now say that:
 \begin{tcolorbox}
 \begin{align}
-    \frac{1}{f(x)} = \sum_{i=1}^{n} \frac{\textrm{det}(\Delta[i])}{\left(F(\alpha_i, m_i)(x-\alpha_i)\right)^{m_i}} \nonumber
+    \frac{1}{f(x)} = \sum_{i=1}^{n} \frac{\textrm{det}(\Delta[i])}{\left(F(\alpha_i, m_i)(x-\alpha_i)\right)^{m_i}} \label{repeated}
 \end{align}
 where $\Delta[i]$ is a $m_i \times m_i$ matrix defined by:
 \begin{align}
@@ -144,7 +145,7 @@ where $\Delta[i]$ is a $m_i \times m_i$ matrix defined by:
 
 The zeros are automatically taken care of in this definition too. Also, when $m_i = 1$, $\Delta[i] = [1]$ and $F(\alpha_i, 1) = f'(\alpha_i)$ so this is consistent with the distinct roots case we started with.
 
-\newpage
+% \newpage
 \section*{Polynomial Interpolation and the Vandermonde matrix}
 Suppose I know that a function $H(x)$ takes values $\beta_i$ at $x = \alpha_i$ for $i \in \{1,2,\dots,n\}$ where the $\alpha_i$ are distinct. If I was to give an estimated $H$ from this information assuming that, say, $H(x)$ is a polynomial of degree $n-1$; then $H(x)$ can be `uniquely' expressed as:
 \begin{align}
@@ -206,5 +207,64 @@ Let $C$ be the cofactor matrix of $V$ (each element is the cofactor of the corre
     \right) && U = \{1,2,\dots,n\}
 \end{align*}
 Here $V$ is a standard Vandermonde matrix and $V_k$ is formed by removing the $k$-th column from $V$ and adding a new column at the right end for the next power ($n$).
+
+\section*{`Partial fractions' for non-polynomials}
+
+\begin{tcolorbox}
+Though this section is quite hand-wavy, most results do happen to be correct and well-known.
+\end{tcolorbox}
+
+To decompose something into partial fractions as in \eqref{basic} we just need to know the roots of $f(x)$ and the derivative of $f$ at those roots. Of course, $f(x)$ needs to be a polynomial too but what if I decide to humour the formulae? What if, say, $f(x) = \sin x$ ?
+
+Think of $\sin x$ as a polynomial with roots $n\pi$ for all integers $n$. We may try to compare $\sin x$ to a more polynomial form of $x(x^2-\pi^2)(x^2-4\pi^2)\cdots$. This doesn't look right because we probably need to multiply by some appropriate constant so that, say $\lim_{x\rightarrow 0} (\sin x / x) = 0$. So maybe we compare $\sin x$ to a `polynomial' that looks like: $x \prod_{k=1}^{\infty} \left(1-\left(\frac{x}{k\pi}\right)^2\right)$. This does come close to $\sin x$ which you can see by trying to graph a finite product. This is actually known as Weierstrass factorization. So what if we pretend this is $\sin x$ to see how $1/\sin x$ will break into partial fractions according to \eqref{basic}? We get
+\begin{align}
+    \frac{1}{\sin x} = \sum_{k = -\infty}^{\infty} \frac{(-1)^k}{x-k\pi} \label{cosec}
+\end{align}
+This funny looking equation is actually \href{https://en.wikipedia.org/wiki/Trigonometric_functions#Partial_fraction_expansion}{true}, though more commonly written in the following equivalent format:
+\begin{align}
+     \frac{x\csc x - 1}{2x^2} = \sum_{k=1}^{\infty} \frac{(-1)^k }{x^2-k^2\pi^2}
+\end{align}
+But there is an important issue with our line of reasoning so far. Other than the lack of rigour, of course. We seem to imply that any function $f(x)$ who equals zero only at $x = n\pi$ and has the derivative as $f'(n\pi) = (-1)^n$ will be able to take the place of $\sin x$ in \eqref{cosec}. But clearly there are functions other than $\sin x$ that are zero at $n\pi$ with slope $(-1)^n$. You can construct any such example but let's take a simple one: $\sin x - a \sin^2 x$ for some $a\in (0,1)$ 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.35]{sinx.png}
+    \caption{$(\sin x)$ vs $(\sin x - a \sin^2 x)$}
+\end{figure}
+
+Let $f_a(x) = \sin x - a\sin^2 x$. If we are going to pretend $f_a(x)$ and $f(x)$ are polynomials, then we need to be including their non-real roots too. If we define $\sin x$ for $x \in \mathbb{C}$ as $\frac{e^{ix}-e^{-ix}}{2i}$ then $f(x) = \sin x$ still has only real roots but $f_a(x)$ has some additional non real roots (from solving $\sin x = 1/a$) that we need to have corresponding terms for in the partial fraction decomposition. In other words, when we say that there are no roots other than $n \pi$, that includes non-real roots. 
+
+\begin{tcolorbox}
+If \eqref{cosec} is correct, it seems to also imply that the exact shape of $\sin x$ is just the `right' shape for starting at $x=0$ with a slope of 1 and finishing at $x=\pi$ with a slope of -1, for example. If we try to do this by drawing any other shape there will apparently be some underlying non-real roots associated with it.
+\end{tcolorbox}
+
+To test our claim about taking into account the non-real roots of $f_a(x)$ too in the partial fraction decomposition, we calculate that these are of the form
+\begin{align}
+    x_k &= \alpha_k \mp i \beta && k \in \mathbb{Z} 
+\end{align}
+where
+\begin{align}
+    \alpha_k &= \frac{\pi}{2} + 2k\pi \\
+    \beta &= \ln \left(\frac{1}{a} + \sqrt{\frac{1}{a^2} - 1}\right)
+\end{align}
+and
+\begin{align}
+    f_a'(x_k) = \mp i \sqrt{\frac{1}{a^2} - 1}
+\end{align}
+So the additional terms due to non real roots will be:
+\begin{align}
+    \frac{1}{\left(i\sqrt{\frac{1}{a^2}-1}\right) \left(x - (\alpha_k + i \beta)\right)} + \frac{1}{\left(-i\sqrt{\frac{1}{a^2}-1}\right) \left(x - (\alpha_k - i \beta)\right)} = \frac{\frac{2\beta a}{\sqrt{1-a^2}}}{x^2 + 2\alpha_k x + \alpha_k^2 + \beta^2}
+\end{align}
+And therefore we want to claim that:
+\begin{align}
+    \frac{1}{\sin x - a \sin^2 x} = \sum_{k = -\infty}^{\infty} \frac{(-1)^k}{x-k\pi} + \sum_{k = -\infty}^{\infty} \frac{\frac{2\beta a}{\sqrt{1-a^2}}}{x^2 + 2\alpha_k x + \alpha_k^2 + \beta^2}
+\end{align}
+I can't `prove' this equality but approximating finite sums on any graphing calculator can show us that they are close enough and so (probably) equal.
+
+So, if it works for $\sin x$ then it probably works for some other simple functions too. If $f(x) = \tan x$ then $f$ is zero at only $n\pi$ (including possible non-real roots) for $n \in \mathbb{Z}$ and $f'(n\pi) = 1$. So
+\begin{align}
+    \frac{1}{\tan x} = \sum_{k = -\infty}^{\infty} \frac{1}{x-k\pi} \label{tan}
+\end{align}
+which is also \href{https://en.wikipedia.org/wiki/Trigonometric_functions#Partial_fraction_expansion}{true} and so is the case of $f(x) = \cos x$ and $f(x) = \cot x$ etc. Apparantly the discontinuity at $x = k\pi + \pi/2$ when treating $f(x) = \tan x$ as a polynomial does not break \eqref{tan}. The wikipedia example of $\csc^2 x$ suggests that the equations for the repeated roots case also hold for `non-polynomials'. I claim, without proof, that \eqref{basic} and \eqref{repeated} are awesome.
 
 \end{document}
