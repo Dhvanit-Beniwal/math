@@ -1,0 +1,199 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=1cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\author{\vspace{-10ex}}
+\title{Miscellaneous Problems}
+\date{\vspace{-10ex}}
+
+\begin{document}
+\maketitle
+
+\section{}
+$x,y,t$ are positive real numbers where $t<1$ and they satisfy:
+$$\frac{x}{t} + \frac{y}{\sqrt{1-t^2}} = 1$$
+Prove that:
+$$x^{2/3} + y^{2/3} \leq 1$$
+
+\section{}
+Let $(a_n)_{n\geq0}$ be a sequence of real numbers such that for all $n\geq0$
+$$a_{n+1} = a_n^2 - 2$$
+Find all possible values of $a_0$ for which the sequence will become periodic (i.e. $\exists p,q \in \mathbb{Z}$ such that $p\geq 0, q>0$ and $a_n = a_{n+q} \forall n\geq p$)
+
+\section{}
+Let $n$ be a natural number. Are there infinitely many solutions $(a,b,c)$ in $\mathbb{N}$ for:
+$$a^2 + b^2 = c^n$$ where say $(a^2 ,b^2, c^n)$ are coprime? Write a function to generate an arbitrary number of such triplets at will. (A generating function/expression). For example, if $n=2$ we may have $(a,b,c) = (k^2-1, 2k, k^2+1)$ etc
+
+\section{Angles around a tetrahedron's corner}
+Four distinct points $O,A,B,C$ lie in three-dimensional space and $\angle AOB = c, \angle BOC = a, \angle COA = b$. Prove that
+$$1+2\cos a\cos b\cos c \geq \cos^2 a + \cos^2b + \cos^2c$$
+
+\section{exp(x) much?}
+Prove that for integers $a,b$ where $a>b \geq 0$
+$$\sum_{n=0}^{\infty} \frac {1}{(an+b)!} = \frac {1}{a} \sum_{k=0}^{a-1} \cos \bigg(\sin \bigg( \frac {2 \pi k}{a} \bigg) - \frac {2 \pi b k}{a} \bigg) e ^{\cos \frac {2 \pi k}{a}  }  $$
+
+\section{}
+A function $y= f(x)$
+is $k$ times differentiable everywhere and satisfies:
+$$ \frac {d^k y}{dx^k}= x^{nk} + y$$
+Where $n$ and $k$ are natural numbers. Find, in terms of $k$, :
+
+$$\lim_{n\rightarrow \infty} {{f(1)}\over {f(0)}}$$
+
+\section{Descartes theorem (4 mutually touching circles)}
+\subsection{}
+$a,b,c,d$ are positive real numbers such that
+$$\sqrt{\frac{b+c+d}{a}} + \sqrt{\frac{a+c+d}{b}} + \sqrt{\frac{a+b+d}{c}}  = \sqrt{\frac{a+b+c}{d}} $$
+Prove that
+$$2\left(\frac{1}{a^2} + \frac{1}{b^2} + \frac{1}{c^2} + \frac{1}{d^2}\right) = \left(\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}\right)^2$$
+
+\subsection{}
+Three circles (A,B,C) of radius $a,b,c$ are such that each touches the other two externally. If $\Delta$ is the area of the triangle formed with their centres as vertices, if $R$ is the radius of the biggest circle that touches all three, and $r$ is the radius of smallest circle that touches the three, then :
+\begin{align*}
+    \frac{1}{r} = \frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{2\Delta}{abc}
+\end{align*}
+If $\frac {1}{\sqrt a} + \frac {1}{\sqrt b} > \frac {1}{\sqrt c}$ then
+$$\frac {1}{R} + \frac {1}{a} + \frac {1}{b} + \frac {1}{c} = \frac {2 \Delta}{abc}$$
+Other variations will form the same configuration (one of these two), geometrically, but still:
+\\\\
+If $\frac {1}{\sqrt a} + \frac {1}{\sqrt b} < \frac {1}{\sqrt c}$ $$\frac {1}{R} = \frac {1}{a} + \frac {1}{b} + \frac {1}{c} - \frac {2 \Delta}{abc}$$
+If circles A and B touch each other externally and they both touch the bigger circle C internally, then:
+$$\frac {1}{R'} = \frac {1}{a} + \frac {1}{b} - \frac {1}{c} \pm  \frac {2 \Delta }{abc}$$
+Where the $+/-$ gives the smaller and bigger circle (respectively) that touches all three with radius $R'$.
+
+...etc
+\\\\
+Descartes theorem states these results in terms of radius of curvatures (which can be positive or negative) which would feel more consistent w.r.t expressions.
+\\\\
+Also, The incentre (of triangle formed by centres) , the centre of $r$ and the centre of $R$ are collinear. With centre of inversion as the incentre, and inverting radius as inradius, the circles corresponding to $r$ and $R$ invert to each other.
+
+\section{When are cubic roots real?}
+$a,b,c$ are real numbers. Prove that:
+$$x^3+3ax^2+3bx+c=0$$
+Has 3 real roots if and only if
+$$(ab-c)^2 \leq 4(ac-b^2)(b-a^2)$$
+
+\section{Blundon's Inequality}
+Let $I,O$ be the incentre and circumcentre of a triangle with circumradius $R$ and inradius $r$
+Let $s$ be the semi-perimeter.
+Prove that:
+\begin{align} \bigg | s^2-(2R^2 + 10 Rr - r^2) \bigg | \leq \frac {2 IO^3}{R} \label{blundon}\end{align}
+With enough creativity, this can be transformed into a lot of funny looking inequalities. Like:
+$$\frac {OH^2}{IO^2} \leq 7 + 2 \frac {IO}{R}$$
+which is weaker version of the following equivalent of \eqref{blundon}
+$$ \left| \frac {OH^2}{IO^2} + \frac {\sum (a-b)^2}{2 IO^2} - 7 \right| \leq 2 \frac {IO}{R}$$
+
+\section{Sum of $k$-th powers of first $n$ natural numbers}
+
+For $n,k \in \mathbb{N}$ and $k>1, n\geq 1$ let
+\begin{align*}
+    f_k(n) = \sum_{r=1}^{n} r^k
+\end{align*}
+Show that
+\begin{align*}
+    f_k(n) = \begin{cases}
+    \frac{n(n+1)}{k+1}\left(n+\frac{1}{2}\right)P_k(n^2 + n) & $k$ \textrm{ is even} \\\\
+    \frac{n^2(n+1)^2}{k+1}P_k(n^2 + n) & $k$ \textrm{ is odd} 
+    \end{cases}
+\end{align*}
+where $P_k$ is a $\left\lfloor \frac{k}{2}\right\rfloor-1$ degree polynomial with leading coefficient 1.
+
+For example:
+\begin{align*}
+    P_2(x) = 1 &,&& P_3(x) = 1 \\
+    P_4(x) = x-\frac{1}{3} &,&& P_5(x) = x-\frac{1}{2} \\
+    P_6(x) = x^2-x+\frac{1}{3} &,&& P_7(x) = x^2-\frac{4}{3}x+\frac{2}{3}
+\end{align*}
+
+\section*{Don't try to prove the following:}
+They're easy to verify on a calculator and have little/no purpose otherwise. But they're true. And they're tight. I just wanted to have some content between the problems and solutions so I got creative. These have nothing to do with anything.
+\begin{align}
+    2(0.9)^{10} > \ln2 &> 0.4^{0.4} \\
+    \sqrt{13}+1 &> 2\ln 10 \\
+    1.6^{0.2} &< \ln3 \\
+    \frac{\pi^2}{10} &> 0.8^{1/17} \\
+    5 \ln 2 + 6 \ln 5 -4 \ln 7 - 2 \ln 3 &< \pi < \ln 19 + 20 \ln 10 -23 \ln 7 - \ln 3 \\
+    0<31.948^{1/19} - 1.2 &< 10^{-9} \\
+    \ln17 + 6\ln 7 &> 7\ln2 + 6\ln 5 \\
+    25 &> 12\ln2 + 2\ln3 + 9\ln5 \\
+    18\ln3 + 10\ln2 &< 15\ln5+\ln13 \\
+    35\ln3 &> 16\ln2+17\ln5 
+\end{align}
+
+\section*{Solutions/Hints}
+\section*{1}
+Someone told me to use Holder's inequality but I didn't know what it was. Anyway, we'll prove:
+\begin{align*}
+    \left(\frac{x}{t} + \frac{y}{\sqrt{1-t^2}}\right) \geq \left(x^{2/3} + y^{2/3}\right)^{3/2}
+\end{align*}
+The following inequalities, which are true because of cauchy-schwarz, will be enough:
+\begin{align*}
+    \left(\frac{x}{t} + \frac{y}{\sqrt{1-t^2}}\right)&\left(t\cdot x^{1/3} + \sqrt{1-t^2} \cdot y^{1/3}\right) \geq \left(x^{2/3} + y^{2/3}\right)^{2} \\
+    \left(x^{2/3} + y^{2/3}\right)\left(t^2 + (\sqrt{1-t^2})^2\right) \geq &\left(t\cdot x^{1/3} + \sqrt{1-t^2} \cdot y^{1/3}\right)^2
+\end{align*}
+We could pre-maturely substitute $x=a\cos^3\phi, y=a\sin^3\phi$ and hope to prove $a\leq 1$ and then these inequalities would look simpler. But whatevs.
+
+\section*{2}
+A substitution like $a_n = 2\cos(b_n)$ or $a_n = b_n + (1/b_n)$ with some justification. After that it's ez.
+
+\section*{3}
+If $z = x+iy$, let $|z|^2 = x^2+y^2$. Here $x,y$ don't have to be integers. We can write
+\begin{align*}
+    |(x+iy)^n|^2 &= (|x+iy|^2)^n \\
+    |p_n(x,y) + i q_n(x,y)|^2 &= (x^2+y^2)^n \\
+    \left(p_n(x,y)\right)^2 + \left(q_n(x,y)\right)^2 &= (x^2+y^2)^n
+\end{align*}
+Here $p_n$ and $q_n$ are polynomials one will get from the expansion of $(x+iy)^n$. It can be written similar to how a binomial expansion is written but who has the time. For this $x,y$ don't have to be integers, but by choosing integers $x,y$ we can generate $(a,b,c) = (p_n(x,y), q_n(x,y), x^2+y^2)$. For instance, if $n = 3$, we can have $(a,b,c) = (k^3 - 3k, 3k^2 - 1, k^2+1)$
+
+\section*{4}
+LHS$-$RHS = $\bigg(\overrightarrow{OA} \cdot (\overrightarrow{OB} \times \overrightarrow{OC})\bigg)^2$. Write in terms of the determinant for clarity.
+
+\section*{5}
+Say the $a$-th roots of unity are $\omega_k$ for $k\in \{0,1,\dots,a-1\}$. Then look at the expansion of $\exp(\omega_k)$ (or $e^{\omega_k}$) for all these $k$. What happens when we add them up? So what do we do when $b\neq0$?
+
+\section*{6}
+The answer, to the best of my knowledge, is the expression from 5 with $a=k,b=0$. To get that, suppose you find one such function $y_0 = f_0(x)$ satisfying the given differential equation. Then $y-y_0$ is the $k$-th derivative of itself and we know how to solve for that. Now to guess such a $y_0$, think about $k=1$. Now how will you do it for $k>1$?
+
+\section*{7}
+7.1 is just the exact algebraic problem posed by 7.2 where $d=r$. One method to derive these relations (in contrast to a proof) in 7.2 if we don't know them beforehand is by inversion (geometry). Circles invert to circles but sometimes to straight lines. If they touch before inversion they touch after inversion. I don't want to draw any figures, so go figure (hah) the centre and radius of inversion that might help.
+
+\section*{8}
+Following cardano's method to find cubic roots, the substitution $x = y-a$ and $y = z + (a^2 - b)/z$ will give a quadratic in $z^3$. The existence of real roots of this quadratic is related to the existence of 3 real roots of the original cubic. What happens for the case of equal roots in the quadratic?
+
+\section*{9}
+If the sides of the triangle are $a,b,c$ then
+\begin{align*}
+    a+b+c &= 2s\\
+    ab+bc+ca &= r^2 + s^2 + 4Rr \\
+    abc &= 4Rrs
+\end{align*}
+Let $p(x) = (x-a)(x-b)(x-c)$. If we impose the constraint (on the coefficients of $p(x)$) that it has all 3 roots real (like in 1.8), then we get an inequality in $R,r,s$ which with enough algebra (and motivation) can be converted to Blundon's inequality. Also, we only need some three properties of the triangle that can be expressed in terms of $R,r,s$ and those quantities need not be the sides. For instance, take the radii of the three ex-circles of a triangle as $r_1,r_2,r_3$. We can write
+\begin{align*}
+    r_1 + r_2 + r_3 &= r+4R\\
+    r_1r_2 + r_2r_3 + r_3r_1 &= s^2\\
+    r_1r_2r_3 &= rs^2
+\end{align*}
+Imposing three-real-roots-constraint on coefficients of $p(x) = (x-r_1)(x-r_2)(x-r_3)$ instead will also lead to the same inequality (eventually).
+
+\section*{10}
+I did not come up with this, but to make an inductive argument (this also doubles up as a recursive algorithm to find $P_k$) consider this:
+\\\\
+$r^p(r+1)^p - r^p(r-1)^p$ is a polynomial in $r$ with only odd powers starting at $2p-1$. Sum up this expression as $r$ ranges from $1$ to $n$, in two different ways. This will help to find $P_k$ for $k = 2p-1$.
+\\\\
+Similarly, $r^p(r+1)^p(2r+1) - r^p(r-1)^p(2r-1)$ is a polynomial in $r$ with only even powers starting at $2p$. Sum up this expression as $r$ ranges from $1$ to $n$, in two different ways. This will help to find $P_k$ for $k = 2p$.
+\\\\
+As far as recursions go, this one sucks because to find $P_k$ we need roughly $k/4$ instance of $P_i$ for different $i<k$. But it's better than to require all $\sim k-1$ instances in the traditional approach where the polynomial in question is $(r+1)^p-r^p$
+
+\end{document}
