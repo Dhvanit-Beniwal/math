@@ -225,7 +225,7 @@ If I was to interpolate $H$ from this information assuming that, say, $H(x)$ is 
 Where $f(x) := \prod_{i=1}^{n} (x-\alpha_i)^{m_i}$ and $f(x)/(x-\alpha_i)^{m_i}$ would be a shorthand as before. $p_i(x)$ is a polynomial of degree $m_i-1$ as described in the previous section. The justification for this is also the same as before, $H(x)-$RHS is divisible by $(x-\alpha_i)^{m_i}$ for all $i$ (write in terms of $p(x)g(x)-1$ to see how). But it's of degree 1 less than $\sum m_i$, so it is zero.
 \end{tcolorbox}
 
-Now a polynomial of degree $n-1$ is described completely by its $n$ coefficients. But by \eqref{defn-H} we can see that its also completely described by the values it returns at some $n$ inputs $\alpha_i$. Let the coefficient of $x^k$ in $H(x)$ from \eqref{defn-H} be $c_k$ where $k \in \{0,1,\dots,n-1\}$. The following relation exists between $\alpha_i, \beta_i, c_k$:
+Now a polynomial of degree $n-1$ is described completely by its $n$ coefficients. But by \eqref{defn-H} we can see that its also completely described by the values it returns at some $n$ inputs $\alpha_i$. So we have 2 different ways to express the coefficients, given the outputs $\beta_i$ returned at some $\alpha_i$. We can look at the coefficients in \eqref{defn-H} or we can solve for the coefficients from a system of linear equations. Let's equate the two. Let the coefficient of $x^k$ in $H(x)$ from \eqref{defn-H} be $c_k$ where $k \in \{0,1,\dots,n-1\}$. The following relation exists between $\alpha_i, \beta_i, c_k$:
 \begin{align}
     \textrm{let } V = 
     \begin{bmatrix}
@@ -235,21 +235,37 @@ Now a polynomial of degree $n-1$ is described completely by its $n$ coefficients
         1 & \alpha_n & \alpha_n^2 & \cdots & \alpha_n^{n-1}
     \end{bmatrix}
 \end{align}
-($V$ stands for Vandermonde)
+(btw $V$ stands for Vandermonde)
 \begin{align}
     V \begin{bmatrix}c_0 \\ c_1 \\ \vdots \\ c_{n-1}\end{bmatrix} &= \begin{bmatrix}\beta_1 \\ \beta_2 \\ \vdots \\ \beta_{n} \end{bmatrix} \\
     \begin{bmatrix}c_0 \\ c_1 \\ \vdots \\ c_{n-1}\end{bmatrix} &= V^{-1} \begin{bmatrix}\beta_1 \\ \beta_2 \\ \vdots \\ \beta_{n} \end{bmatrix} \label{defn-V}
 \end{align}
-From \eqref{defn-H} and \eqref{defn-V} we conclude that the $i$-th column of $V^{-1}$ is the set of coefficients of:
+Notice how in the RHS of \eqref{defn-V} we have a linear combination of the columns of $V^{-1}$, with multipliers $\beta_i$ similar to how in \eqref{defn-H} we have a summation with multipliers $\beta_i$. From this we can conclude that the $i$-th column of $V^{-1}$ should ideally just be the coefficients of the following polynomial:
 \begin{align}
     \frac{f(x)}{f'(\alpha_i)(x-\alpha_i)} = \prod_{k=1, k\neq i}^{n} \frac{x-\alpha_k}{\alpha_i - \alpha_k}
 \end{align}
-Let $C$ be the cofactor matrix of $V$ (each element is the cofactor of the corresponding element in $V$, and $V^{-1} = C^\top/\textrm{det}(V)$). Then for example: $C_{i,n}/\textrm{det}(V) = \prod_{k=1, k\neq i}^{n} \frac{1}{\alpha_i - \alpha_k}$ which is the coefficient of $x^{n-1}$ (calculated in two different ways). Similarly, the coefficient of $x^{k-1}$ for some $k \in \{1,2,\dots,n\}$ is (calculated in two different ways):
+\newpage
+Let $C$ be the cofactor matrix of $V$ (each element is the cofactor of the corresponding element in $V$, and therefore $V^{-1} = C^\top/\textrm{det}(V)$). The $k$-th element of the $i$-th column of $V^{-1}$, which is $\frac{C^{\top}_{k,i}}{\textrm{det}(V)}$, should be the coefficient of $x^{k-1}$ of $\prod_{k=1, k\neq i}^{n} \frac{x-\alpha_k}{\alpha_i - \alpha_k}$. An insightful way to write this would be:
 \begin{align}
-    \frac{C_{i,k}}{\textrm{det}(V)} &= \frac{C_{i,n}}{\textrm{det}(V)}\left(\textrm{coeff. of $x^{k-1}$ in } \prod_{j=1, j\neq i}^{n} (x-\alpha_j)\right) \\
-    C_{i,k} &= C_{i,n}\left( (-1)^{n-k} \sum_{\substack{S \subseteq U \\ |S| = n-k}}\prod_{j\in S} \alpha_j\right) && U = \{1,2,\dots,n\} - \{i\} \textrm{ and } k\neq n \label{identity}
+    \sum_{k=1}^{n} \frac{x^{k-1} C_{i,k}}{\textrm{det}(V)} &= \prod_{k=1, k\neq i}^{n} \frac{x-\alpha_k}{\alpha_i - \alpha_k} \\
+    \sum_{k=1}^{n} x^{k-1} C_{i,k} &= \frac{\textrm{det}(V)}{\prod_{k=1, k\neq i}^{n} (\alpha_i - \alpha_k)} \prod_{k=1, k\neq i}^{n} (x-\alpha_k) \label{eq34}
 \end{align}
-\eqref{identity} is just an identity involving matrix determinants and is independent of $\beta_i, c_k$ or $H$. It's an identity in the $n-1$ variables $a_k$ for $k\in\{1,2,3,\dots,n\}-\{i\}$. Once we explicitly write the cofactors $C_{i,k}, C_{i,n}$ as determinants themselves we see that this is an identity concerning the $n-1 \times n-1$ vandermonde matrix and tells us what would happen to its determinant if we remove its $k$-th column and add a new column at the right end continuing the pattern of powers. For the sake of brevity (that's a word, right?) we will state this property for an $n\times n$ vandermonde matrix instead of $n-1 \times n-1$. So, in short, as far as the underlying identity involving matrix determinants is concerned, it is equivalently: (for new variables $x_i$ with $i\in\{1,2,\dots,n\}$)
+Think about the explicit expression for a vandermonde determinant, and notice that the product $\prod_{k=1, k\neq i}^{n} (\alpha_i - \alpha_k)$ contains all the terms in $\det(V)$ that are not in $C_{i,n}$ (which is another smaller vandermonde determinant). Even the ($\pm$) signs work out just right so that we can write
+\begin{align}
+    \frac{\textrm{det}(V)}{\prod_{k=1, k\neq i}^{n} (\alpha_i - \alpha_k)} = C_{i,n} \label{eq35}
+\end{align}
+Now we could have just inferred this directly from \eqref{eq34} by looking at the coefficient of $x^{n-1}$ but that is the very equation we are trying to verify independently. Atleast, I am. It now becomes:
+\begin{align}
+    \sum_{k=1}^{n} x^{k-1} C_{i,k} &= C_{i,n} \prod_{k=1, k\neq i}^{n} (x-\alpha_k) \label{eq36}
+\end{align}
+\eqref{eq36} does not contain the variable $\alpha_i$ anywhere but that variable is independent from all the other $\alpha_j$ ($j\neq i$). So it doesn't matter if I replace $x$ with $\alpha_i$. Think about what that means. I'm not substituting $x=\alpha_i$ in the traditional sense of evaluating a polynomial/function. \eqref{eq36} is supposed to be an algebraic identity, true always because it is the same algebraic expression on each side. Just like $x^2+ax = xa+x^2$ is an identity whose validity is not changed if I substitute $x$ with $b$. Why do I want to do this? Because the LHS becomes $\sum_{k=1}^{n} \alpha_i^{k-1} C_{i,k}$ and we know this to be $\det(V)$ by definition of the determinant. And the supposed identity we wanted to verify has now just reduced to \eqref{eq35} which we have already proved.
+\\\\
+This made for a very fancy proof that gives the impression of being elegant but it was never clear what underlying property of vandermonde cofactors $C_{i,k}$ was actually being used to equate the two expressions. 
+\begin{align}
+    C_{i,k} &= C_{i,n}\left(\textrm{coeff. of $x^{k-1}$ in } \prod_{j=1, j\neq i}^{n} (x-\alpha_j)\right) \\
+    (-1)^{i+k} C_{i,k} &= (-1)^{i+n} C_{i,n}\left(\sum_{\substack{S \subseteq U \\ |S| = n-k}}\prod_{j\in S} \alpha_j\right) && U = \{1,2,\dots,n\} - \{i\} \textrm{ and } k\neq n \label{identity}
+\end{align}
+Where the multiplied term on RHS; probably familiar as Vieta's formula for polynomial coefficients; is kinda hard to write in a compact notation, as I found out just now. \eqref{identity} is an identity in the $n-1$ variables $a_k$ for $k\in\{1,2,3,\dots,n\}-\{i\}$. Once we explicitly write the cofactors $C_{i,k}, C_{i,n}$ as determinants themselves we see that this is an identity concerning the $n-1 \times n-1$ vandermonde matrix and tells us what would happen to its determinant if we remove its $k$-th column and add a new column at the right end continuing the pattern of powers. For the sake of brevity (that's a word, right?) we will state this property for an $n\times n$ vandermonde matrix instead of $n-1 \times n-1$. So, in short, as far as the underlying identity involving matrix determinants is concerned, it is equivalently: (for new variables $x_i$ with $i\in\{1,2,\dots,n\}$)
 \begin{align*}
     \textrm{let } V &= \begin{bmatrix}
         1 & x_1 & x_1^2 & \cdots & x_1^{k-1} & x_1^{k} & \cdots & x_1^{n-1} \\
